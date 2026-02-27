@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Max Heap Control Plane</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <div class="gradient-bg"></div>
+  <main class="page">
+    <header class="hero glass">
+      <div>
+        <p class="eyebrow">Production Data Structures Platform</p>
+        <h1>Max Heap Control Plane</h1>
+        <p class="subtitle">C++ core engine + REST API + live interactive dashboard.</p>
+      </div>
+      <div class="hero-stats">
+        <div><span>Status</span><strong id="status">online</strong></div>
+        <div><span>Size / Capacity</span><strong id="sizeCapacity">0 / 0</strong></div>
+        <div><span>Current Max</span><strong id="currentMax">-</strong></div>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="panel glass">
+        <h2>Insert Values</h2>
+        <p>Use comma-separated integers, e.g. <code>90,40,70,10</code>.</p>
+        <div class="row">
+          <input id="insertInput" type="text" placeholder="50,20,99" />
+          <button id="insertBtn" class="btn primary">Insert</button>
+        </div>
+      </article>
+
+      <article class="panel glass">
+        <h2>Build / Resize</h2>
+        <div class="row">
+          <input id="buildInput" type="text" placeholder="Build from array" />
+          <button id="buildBtn" class="btn">Build Heap</button>
+        </div>
+        <div class="row">
+          <input id="resizeInput" type="number" min="1" placeholder="New capacity" />
+          <button id="resizeBtn" class="btn">Resize</button>
+        </div>
+      </article>
+
+      <article class="panel glass">
+        <h2>Actions</h2>
+        <div class="row row-wrap">
+          <button id="deleteBtn" class="btn warn">Delete Max</button>
+          <button id="clearBtn" class="btn">Clear</button>
+          <button id="refreshBtn" class="btn">Refresh</button>
+        </div>
+        <p id="feedback" class="feedback">Ready.</p>
+      </article>
+    </section>
+
+    <section class="grid two-cols">
+      <article class="panel glass">
+        <h2>Heap Array</h2>
+        <div id="heapArray" class="heap-array"></div>
+      </article>
+      <article class="panel glass">
+        <h2>Heap Tree Levels</h2>
+        <div id="heapTree" class="heap-tree"></div>
+      </article>
+    </section>
+
+    <section class="panel glass">
+      <h2>Operational Metrics</h2>
+      <div id="metrics" class="metrics"></div>
+    </section>
+  </main>
+
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
