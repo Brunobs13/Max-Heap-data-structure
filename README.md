@@ -1,94 +1,157 @@
-# Max Heap Implementation
+# Max Heap Engine Platform
 
-This project implements a Max Heap data structure using a binary tree represented as an array. The Max Heap operations are defined in C++ and include methods for insertion, deletion, and maintaining heap properties.
+A production-ready transformation of an academic Max Heap implementation into a modular C++ engine, API service, and interactive web application.
 
-## Overview
+## Project Overview
+This repository provides a complete Max Heap platform with:
+- A robust C++ heap core
+- A C-compatible API bridge for integrations
+- A FastAPI service exposing operational endpoints
+- An interactive web dashboard to inspect and control heap behavior in real time
+- CI, Docker, tests, and professional repository hygiene
 
-A Max Heap is a complete binary tree where each parent node is greater than or equal to its child nodes. This project provides a full implementation of a Max Heap, including operations to manage and manipulate the heap efficiently.
+## Business Problem
+Academic projects often demonstrate algorithms but miss production qualities such as modularity, observability, secure configuration, and deployment readiness. This project solves that gap by turning a simple data-structure assignment into a business-grade technical artifact suitable for interviews and portfolio reviews.
 
-## File Structure
-
-- **`maxh.h`**: Header file defining the `IMAXH` class with the heap operations and data members.
-- **`maxh.cpp`**: Implements the methods declared in `maxh.h`.
-- **`main-maxh.cpp`**: Command-line interface for interacting with the Max Heap.
-
-## Class: `IMAXH`
-
-The `IMAXH` class encapsulates all the functionalities related to the Max Heap. It provides methods to insert elements, delete the maximum element, print the heap, and more.
-
-### Methods
-
-- **Constructor & Destructor**
-  - `IMAXH(int nmax = 15)`: Initializes a Max Heap with a specified capacity.
-  - `~IMAXH()`: Frees the allocated memory.
-
-- **Heap Operations**
-  - `void insert(int item)`: Inserts an item into the heap.
-  - `void print_max()`: Prints the maximum item in the heap.
-  - `void print()`: Prints all items in the heap in a tree-like structure.
-  - `void dim()`: Prints the number of items currently in the heap.
-  - `void dim_max()`: Prints the maximum capacity of the heap.
-  - `void clear()`: Clears all items in the heap.
-  - `void deleteMax()`: Removes the maximum item from the heap.
-  - `void heapify(int i)`: Restores the heap property by moving elements down.
-  - `void buildMaxHeap()`: Constructs a Max Heap from the current array of elements.
-  - `void redim_max(int newNv)`: Resizes the heap to a new capacity.
-  - `void heapify_up(int i)`: Restores the heap property by moving elements up.
-
-## Usage
-
-### Building the Project
-
-To compile the project, use the following commands:
-
-```bash
-g++ -c maxh.cpp -o maxh.o
-g++ -c main-maxh.cpp -o main-maxh.o
-g++ maxh.o main-maxh.o -o maxh
+## Architecture Diagram (Text)
+```
+[Interactive Web Dashboard]
+          |
+          v
+     [FastAPI Service]
+          |
+          v
+ [Python ctypes Integration Layer]
+          |
+          v
+ [C API Wrapper - Shared Library]
+          |
+          v
+      [C++ MaxHeap Core]
 ```
 
-### Running the Program
+## Tech Stack
+- C++17 (core data structure engine)
+- C ABI wrapper (`ctypes` integration)
+- Python 3.11 + FastAPI + Uvicorn
+- HTML/CSS/JavaScript dashboard
+- CMake + CTest
+- Docker + Docker Compose
+- GitHub Actions CI
 
-Execute the following command to run the program:
+## Project Structure
+```
+.
+├── src/
+│   ├── core/
+│   │   ├── include/
+│   │   │   ├── max_heap.hpp
+│   │   │   └── max_heap_c_api.h
+│   │   ├── max_heap.cpp
+│   │   └── c_api.cpp
+│   ├── apps/
+│   │   └── heap_cli.cpp
+│   └── api/
+│       ├── engine.py
+│       └── app.py
+├── tests/
+│   └── cpp/
+│       └── test_max_heap.cpp
+├── web/
+│   ├── index.html
+│   ├── styles.css
+│   └── app.js
+├── configs/
+├── docs/
+├── scripts/
+├── legacy/
+├── CMakeLists.txt
+├── Dockerfile
+├── docker-compose.yml
+└── Makefile
+```
 
-./maxh
+## Setup Instructions (Step-by-Step)
+1. Clone the repository:
+```bash
+git clone https://github.com/Brunobs13/Max-Heap-data-structure.git
+cd Max-Heap-data-structure
+```
 
+2. Build the C++ engine and tools:
+```bash
+./scripts/build.sh
+```
 
-You can then enter commands to interact with the Max Heap. Available commands are:
+3. Run tests:
+```bash
+./scripts/test.sh
+```
 
-insert <item>: Insert an item into the heap.
-print_max: Print the maximum item in the heap.
-print: Print all items in the heap.
-dim: Print the number of items in the heap.
-dim_max: Print the maximum capacity of the heap.
-clear: Clear all items in the heap.
-delete: Remove the maximum item from the heap.
-heapify_up: Restore heap property by moving items up.
-redim_max <new_capacity>: Resize the heap to a new capacity.
+4. Install API dependencies:
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
+5. Run API + dashboard:
+```bash
+./scripts/run_api.sh
+```
 
-### Command Examples
+6. Open the app:
+- Dashboard: `http://localhost:8080`
+- Health: `http://localhost:8080/health`
+- State API: `http://localhost:8080/api/heap/state`
 
-insert 10 20 15
-print_max       # Output: Max= 20
-print           # Output: Heap= 20 15 10
-delete          # Removes 20
-print           # Output: Heap= 15 10
-dim             # Output: Heap has 2 items
-redim_max 30    # Resizes the heap to a new capacity
+## CI/CD Overview
+The workflow in `.github/workflows/ci.yml` performs:
+1. Dependency setup (Python + CMake + g++)
+2. C++ build
+3. C++ test execution via CTest
+4. API import validation
 
-### Code Explanation
+This guarantees merge quality gates and reproducible builds.
 
-maxh.h: Defines the IMAXH class, including its data members and method declarations.
-maxh.cpp: Implements the heap operations defined in maxh.h, including insertion, deletion, and heap adjustments.
-main-maxh.cpp: Provides a command-line interface for interacting with the heap and processing user commands.
+## Data Versioning Strategy
+This project is algorithmic and does not currently rely on external datasets. If telemetry data is introduced, the recommended approach is:
+- DVC for versioning large datasets
+- Immutable snapshot tags for performance benchmarks
+- Dataset lineage metadata under `docs/`
 
-### Conclusion
-This project provides a robust implementation of a Max Heap in C++, allowing efficient management of heap elements through various operations. The command-line interface facilitates easy interaction and testing of the heap functionalities.
+## Model Tracking Strategy
+No ML model training is currently present. If predictive tuning (e.g., workload-aware heap strategies) is added:
+- Track experiments with MLflow
+- Version benchmark datasets with DVC
+- Store model registry metadata for reproducibility
 
-### Author
-Bruno Ricardo de Sá Ferreira
+## Deployment Strategy
+### Local Docker Deployment
+```bash
+docker compose up --build
+```
 
+### Cloud Deployment
+Deploy container to Render/Fly.io/Railway with:
+- Port `8080`
+- Environment variables from `.env.example`
+- Health endpoint `/health`
 
+## Security Considerations
+- No hardcoded credentials in source files
+- Environment-based runtime configuration (`.env.example`)
+- Legacy academic files isolated under `legacy/`
+- Professional `.gitignore` blocks common secret/artifact leaks
 
+## Lessons Learned
+- Wrapping C++ with a C ABI enables safe language interoperability
+- Clear module boundaries make testing and maintenance easier
+- Dashboard visibility improves understanding of internal heap behavior during debugging/interviews
 
+## Future Improvements
+- Multi-heap session support with persistent storage
+- WebSocket streaming for near real-time updates
+- Prometheus/OpenTelemetry instrumentation
+- Role-based access for admin actions
+- Benchmark harness for large-scale heap operations
