@@ -1,0 +1,13 @@
+services:
+  maxheap-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: maxheap-api
+    environment:
+      MAX_HEAP_LIB_PATH: /app/build/libmaxheap.so
+      MAX_HEAP_INITIAL_CAPACITY: ${MAX_HEAP_INITIAL_CAPACITY:-32}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
